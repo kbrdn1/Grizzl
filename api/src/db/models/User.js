@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const { Schema } = mongoose
 
+// Create Schema
 const UserSchema = new Schema({
   username: {
     type: String,

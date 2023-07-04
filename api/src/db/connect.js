@@ -1,7 +1,10 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
 
+// env variables
 const { MONGODB_URI, MONGODB_PASS, MONGODB_USER } = process.env
+
+// Connect to MongoDB
 const connect = async () => {
   try {
     await mongoose.connect(MONGODB_URI, {
