@@ -13,12 +13,12 @@ exports.signIn = async (username, password) => {
   if (!user) {
     throw new Error('User not found')
   }
-    
+
   const isMatch = comparePassword(password, user.password)
   if (!isMatch) {
     throw new Error('Invalid credentials')
   }
-  const token = createToken()
+  const token = createToken({ id: user._id, username: user.username })
   return { token }
 }
 
@@ -31,7 +31,7 @@ exports.signUp = async (user) => {
 // create token
 const createToken = (data) => {
   return jwt.sign({ data }, JWT_SECRET, {
-    expiresIn: '1h',
+    expiresIn: '1d',
   })
 }
 
