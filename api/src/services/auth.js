@@ -14,16 +14,21 @@ exports.signIn = async (username, password) => {
     throw new Error('User not found')
   }
 
-  const isMatch = comparePassword(password, user.password)
+  const isMatch = await comparePassword(password, user.password)
   if (!isMatch) {
     throw new Error('Invalid credentials')
   }
-  const token = createToken({ id: user._id, username: user.username })
+  const token = createToken({ username: user.username })
   return { token }
 }
 
 // register
 exports.signUp = async (user) => {
+  const existingUser = await userServices.getUserByUsername(user.username)
+  if (existingUser) {
+    throw new Error('User already exists')
+  }
+  user.password = await hashPassword(user.password)
   const newUser = new User(user)
   await userServices.createUser(newUser)
 }
