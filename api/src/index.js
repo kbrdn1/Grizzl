@@ -6,7 +6,7 @@ require('dotenv').config()
 const authRoutes = require('./routes/auth')
 
 // env variables
-const { PORT } = process.env
+const { PORT, APP_URL } = process.env
 
 // app
 const app = express()
@@ -15,7 +15,11 @@ const app = express()
 db()
 
 // cors
-app.use(cors())
+app.use(
+  cors({
+    origin: APP_URL,
+  })
+)
 
 // body parser
 app.use(bodyParser.json())
