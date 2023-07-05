@@ -4,5 +4,8 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  daysiui: {
+    themes: ['fantasy']
+  },
+  plugins: [require('daisyui')],
 }
