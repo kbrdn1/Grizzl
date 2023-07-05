@@ -19,7 +19,8 @@ exports.signIn = async (username, password) => {
     throw new Error('Invalid credentials')
   }
   const token = createToken({ username: user.username })
-  return { token }
+  const id = user.id
+  return { token, id }
 }
 
 // register

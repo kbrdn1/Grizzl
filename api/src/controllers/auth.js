@@ -5,8 +5,8 @@ const { getUserById, getUserByUsername } = require('../services/user')
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body
-    const { token } = await authServices.signIn(username, password)
-    res.status(200).json({ jwt: token })
+    const { token, id } = await authServices.signIn(username, password)
+    res.status(200).json({ jwt: token, id: id })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
