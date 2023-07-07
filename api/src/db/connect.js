@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
+// mongoose.set('debug', true')
 
 // env variables
 const { MONGODB_URI, MONGODB_PASS, MONGODB_USER } = process.env
