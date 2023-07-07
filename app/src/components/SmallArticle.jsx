@@ -54,7 +54,7 @@ const SmallArticle = observer(({ article }) => {
             {printUsername(article.userId)}
           </p>
         </div>
-        <p className='pl-4'>
+        <p className="pl-4">
           {article.content.length > 150
             ? article.content.slice(0, 150) + '...'
             : article.content}

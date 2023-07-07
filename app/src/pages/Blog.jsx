@@ -68,7 +68,7 @@ const Blog = observer(() => {
           <div className="modal-action">
             <button className="btn btn-primary gap-2 group">
               Add
-              <Plus className='group-hover:-translate-x-1 duration-200 ease-out' />
+              <Plus className="group-hover:-translate-x-1 duration-200 ease-out" />
             </button>
             <button className="btn">Cancel</button>
           </div>
