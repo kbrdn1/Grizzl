@@ -5,6 +5,6 @@ const router = require('express').Router()
 
 router.post('/signIn', login)
 router.post('/signUp', register)
-router.get('/verify', isLogged, tokenVerify)
+router.post('/verify', isLogged, tokenVerify)
 
 module.exports = router

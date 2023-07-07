@@ -1,7 +1,7 @@
 const User = require('../db/models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const userServices = require('./user')
+const userServices = require('./users')
 require('dotenv').config()
 
 // env variables
@@ -19,8 +19,7 @@ exports.signIn = async (username, password) => {
     throw new Error('Invalid credentials')
   }
   const token = createToken({ username: user.username })
-  const id = user.id
-  return { token, id }
+  return { token, user }
 }
 
 // register
