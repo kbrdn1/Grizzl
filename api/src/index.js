@@ -22,7 +22,7 @@ db()
 // cors
 app.use(
   cors({
-    origin: APP_URL,
+    origin: { APP_URL },
   })
 )
 

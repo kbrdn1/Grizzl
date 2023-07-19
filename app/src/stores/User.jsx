@@ -21,6 +21,15 @@ class UserStore {
     localStorage.setItem('jwt', jwt)
   }
 
+  getJwt() {
+    return this.jwt
+  }
+
+  removeJwt() {
+    this.jwt = null
+    localStorage.removeItem('jwt')
+  }
+
   setId(id) {
     this.id = id
     localStorage.setItem('id', id)
@@ -30,24 +39,46 @@ class UserStore {
     return this.id
   }
 
+  removeId() {
+    this.id = null
+    localStorage.removeItem('id')
+  }
+
   setUser(user) {
     this.user = user
     localStorage.setItem('user', JSON.stringify(user))
   }
 
-  getUser = () => {
+  getUser() {
     return this.user
   }
 
-  getUsers = async () => {
-    const token = localStorage.getItem('jwt')
+  removeUser() {
+    this.user = null
+    localStorage.removeItem('user')
+  }
+
+  getUsers() {
+    return this.users
+  }
+
+  setUsers(users) {
+    this.users = users
+  }
+
+  removeUsers() {
+    this.users = null
+  }
+
+  getAllUsers = async () => {
+    const token = this.jwt
 
     await axios
       .get(`${import.meta.env.VITE_API_URL}/users`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        this.users = res.data
+        this.setUsers(res.data)
       })
       .catch((err) => {
         console.log(err)
@@ -55,7 +86,7 @@ class UserStore {
   }
 
   verifyToken = async () => {
-    const token = localStorage.getItem('jwt')
+    const token = this.jwt
     const id = this.id
 
     await axios
@@ -68,11 +99,7 @@ class UserStore {
         },
       })
       .catch((err) => {
-        console.log(err)
-        localStorage.removeItem('jwt')
-        this.id = null
-        localStorage.removeItem('id')
-        localStorage.removeItem('user')
+        this.logout()
       })
   }
 
@@ -90,12 +117,48 @@ class UserStore {
   }
 
   logout() {
-    this.jwt = null
-    this.user = null
-    this.id = null
-    localStorage.removeItem('jwt')
-    localStorage.removeItem('user')
-    localStorage.removeItem('id')
+    this.removeJwt()
+    this.removeId()
+    this.removeUser()
+    this.removeUsers()
+  }
+
+  async updateUsername(data) {
+    const token = this.jwt
+
+    await axios
+      .patch(
+        `${import.meta.env.VITE_API_URL}/users/username/${this.id}`,
+        data,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((res) => {
+        this.setUser(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  async updatePassword(data) {
+    const token = this.jwt
+
+    await axios
+      .patch(
+        `${import.meta.env.VITE_API_URL}/users/password/${this.id}`,
+        data,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((res) => {
+        this.setUser(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 }
 

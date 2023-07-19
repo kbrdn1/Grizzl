@@ -1,34 +1,73 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { validUsername, validPassword } from '../utils/regex'
 
 const Register = () => {
   const navigate = useNavigate()
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [checked, setChecked] = useState(false)
-  const [errorChecked, setErrorChecked] = useState('')
-  const [error, setError] = useState('')
+  const usernameRef = useRef(null),
+    passwordRef = useRef(null),
+    [checked, setChecked] = useState(false),
+    [errorChecked, setErrorChecked] = useState(''),
+    [error, setError] = useState(''),
+    [validate, setValidate] = useState(true)
+
+  const handleChange = () => {
+    usernameRef.current.value.length < 3 || passwordRef.current.value.length < 6
+      ? setValidate(true)
+      : setValidate(false)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (!checked) {
       setErrorChecked(
-        "Veuillez accepté les conditions générales d'utilisation pour continuer"
+        'You must accept the terms and conditions to create an account'
       )
       return
     }
 
-    if (username === '' || password === '') {
-      setError('Veuillez remplir tous les champs')
+    if (!usernameRef.current.value || !passwordRef.current.value) {
+      setError('Please fill all the fields')
       return
     }
 
+    if (usernameRef.current.value.length < 3) {
+      setError('Username must be at least 3 characters long')
+      return
+    }
+
+    if (passwordRef.current.value.length < 3) {
+      setError('Password must be at least 3 characters long')
+      return
+    }
+
+    if (usernameRef.current.value.length > 20) {
+      setError('Username must be at most 20 characters long')
+      return
+    }
+
+    if (passwordRef.current.value.length > 20) {
+      setError('Password must be at most 20 characters long')
+      return
+    }
+
+    if (!validUsername.test(usernameRef.current.value)) {
+      setError('Username must contain only letters, numbers, spaces and _')
+      return
+    }
+
+    if (!validPassword.test(passwordRef.current.value)) {
+      setError(
+        'Password must contain minimum six characters, at least one letter and one number'
+      )
+      return
+    }
     const data = {
-      username: username,
-      password: password,
+      username: usernameRef.current.value,
+      password: passwordRef.current.value,
     }
 
     await axios
@@ -75,7 +114,8 @@ const Register = () => {
             <input
               type="text"
               placeholder="username"
-              onChange={(e) => setUsername(e.target.value)}
+              ref={usernameRef}
+              onChange={handleChange}
               className="input input-bordered w-full"
             />
             <label className="label"></label>
@@ -88,7 +128,8 @@ const Register = () => {
             <input
               type="password"
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              ref={passwordRef}
+              onChange={handleChange}
               className="input input-bordered w-full"
             />
             <label className="label">
@@ -106,11 +147,15 @@ const Register = () => {
                 onChange={() => setChecked(!checked)}
               />
               <span className="label-text">
-                J'accepte les conditions générales d'utilisations
+                I agree to the <a href="#">terms and conditions</a>
               </span>
             </label>
           </div>
-          <button type="submit" className="btn btn-active btn-primary">
+          <button
+            type="submit"
+            className="btn btn-active btn-primary"
+            disabled={validate}
+          >
             Connexion
           </button>
         </div>

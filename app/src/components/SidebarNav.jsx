@@ -14,7 +14,7 @@ const SidebarNav = observer(() => {
 
   return (
     <>
-      <div className="fixed z-10 flex-col justify-between gap-2 w-56 h-screen pt-20 pb-4 hidden lg:flex">
+      <div className="fixed z-10 flex-col justify-between gap-2 w-56 h-screen pt-20 pb-4 hidden lg:flex 2xl:-translate-x-[736px] 2xl:left-1/2 ">
         <div className="flex flex-col h-fit pl-4">
           <NavLink
             to="/"

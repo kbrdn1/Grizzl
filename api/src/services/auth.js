@@ -9,7 +9,7 @@ const { JWT_SECRET, SALT_ROUNDS } = process.env
 
 // login
 exports.signIn = async (username, password) => {
-  const user = await userServices.getUserByUsername(username)
+  let user = await userServices.getUserByUsername(username)
   if (!user) {
     throw new Error('User not found')
   }
@@ -18,7 +18,13 @@ exports.signIn = async (username, password) => {
   if (!isMatch) {
     throw new Error('Invalid credentials')
   }
-  const token = createToken({ username: user.username })
+  user = { _id: user._id, username: user.username }
+  const token = createToken({
+    user: {
+      _id: user._id,
+      username: user.username,
+    },
+  })
   return { token, user }
 }
 

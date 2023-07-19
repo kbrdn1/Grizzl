@@ -1,10 +1,16 @@
 const authServices = require('../services/auth')
 const { getUserById, getUserByUsername } = require('../services/users')
+const { validUsername, validPassword } = require('../utils/regex')
 
 // login
 exports.login = async (req, res) => {
+  const { username, password } = req.body
+  if (!validUsername.test(username))
+    return res.status(400).json({ error: 'Invalid username' })
+  if (!validPassword.test(password))
+    return res.status(400).json({ error: 'Invalid password' })
+
   try {
-    const { username, password } = req.body
     const { token, user } = await authServices.signIn(username, password)
     res.status(200).json({ jwt: token, user: user })
   } catch (error) {
@@ -16,9 +22,9 @@ exports.login = async (req, res) => {
 exports.register = async (req, res) => {
   const { username, password } = req.body
 
-  if (username === '')
+  if (username === '' || !validUsername.test(username))
     return res.status(400).json({ error: 'Invalid username' })
-  if (password === '')
+  if (password === '' || !validPassword.test(password))
     return res.status(400).json({ error: 'Invalid password' })
 
   try {
@@ -29,19 +35,16 @@ exports.register = async (req, res) => {
   }
 }
 
+// tokenVerify
 exports.tokenVerify = async (req, res) => {
-  const user = req.user
-  console.log(user)
+  const user = req.user.user
   const id = req.body.id
-  console.log(id)
 
   if (!user) {
     return res.status(401).json({ message: 'You are not logged in' })
   }
   const getUser = await getUserByUsername(user.username)
-  console.log(getUser)
   const getRightUser = await getUserById(id)
-  console.log(getRightUser)
 
   if (!getUser) {
     return res.status(401).json({ message: 'You are not logged in' })

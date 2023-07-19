@@ -4,9 +4,9 @@ import { observer } from 'mobx-react'
 
 const Home = observer(() => {
   return (
-    <div className="hero min-h-screen bg-base-200 pt-20 lg:pt-0">
+    <div className="lg:hero min-h-screen bg-base-200 pt-20 lg:pt-0">
       <div className="hero-content flex-col lg:flex-row lg:gap-10 ">
-        <img src="/hero.jpg" className=" max-w-sm rounded-lg shadow-2xl" />
+        <img src="/hero.jpg" className="rounded-lg shadow-2xl" />
 
         <div className="max-w-md">
           <h1 className="text-5xl font-bold">Welcom to Grizzl!</h1>

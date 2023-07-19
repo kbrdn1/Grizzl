@@ -1,14 +1,16 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom'
-import Home from '../pages/Home.jsx'
-import Login from '../pages/Login.jsx'
-import Register from '../pages/Register.jsx'
-import Logout from '../pages/Logout.jsx'
-import App from '../App.jsx'
-import AuthGuard from '../components/AuthGuard.jsx'
-import Blog from '../pages/Blog.jsx'
-import Post from '../pages/Post.jsx'
+import { createHashRouter, Navigate } from 'react-router-dom'
+import Home from '../pages/Home'
+import Login from '../pages/Login'
+import Register from '../pages/Register'
+import Logout from '../pages/Logout'
+import App from '../App'
+import AuthGuard from '../components/AuthGuard'
+import Blog from '../pages/Blog'
+import Post from '../pages/Post'
+import userStore from '../stores/User'
+import Profile from '../pages/Profile'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <App />,
@@ -20,9 +22,7 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element:
-          localStorage.getItem('jwt') &&
-          localStorage.getItem('id') &&
-          localStorage.getItem('user') ? (
+          userStore.jwt && userStore.user && userStore.id ? (
             <Navigate to="/" />
           ) : (
             <Login />
@@ -31,9 +31,7 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element:
-          localStorage.getItem('jwt') &&
-          localStorage.getItem('id') &&
-          localStorage.getItem('user') ? (
+          userStore.jwt && userStore.user && userStore.id ? (
             <Navigate to="/" />
           ) : (
             <Register />
@@ -42,6 +40,14 @@ const router = createBrowserRouter([
       {
         path: '/logout',
         element: <Logout />,
+      },
+      {
+        path: '/profile',
+        element: (
+          <AuthGuard>
+            <Profile />
+          </AuthGuard>
+        ),
       },
       {
         path: '/blog',

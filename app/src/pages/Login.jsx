@@ -1,21 +1,47 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useContext } from 'react'
 import UserContext from '../contexts/User'
 import { useNavigate } from 'react-router-dom'
+import { validUsername, validPassword } from '../utils/regex'
 
 const Login = () => {
   const navigate = useNavigate()
   const userStore = useContext(UserContext)
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const usernameRef = useRef(null),
+    passwordRef = useRef(null),
+    [error, setError] = useState(null),
+    [validate, setValidate] = useState(true)
+
+  const handleChange = () => {
+    usernameRef.current.value.length < 3 || passwordRef.current.value.length < 6
+      ? setValidate(true)
+      : setValidate(false)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    if (!usernameRef.current.value || !passwordRef.current.value) {
+      setError('Please fill all the fields')
+      return
+    }
+
+    if (!validUsername.test(usernameRef.current.value)) {
+      setError('Username must contain only letters, numbers, spaces and _')
+      return
+    }
+
+    if (!validPassword.test(passwordRef.current.value)) {
+      setError(
+        'Password must contain minimum six characters, at least one letter and one number'
+      )
+      return
+    }
+
     const data = {
-      username: username,
-      password: password,
+      username: usernameRef.current.value,
+      password: passwordRef.current.value,
     }
 
     await userStore.login(data)
@@ -32,6 +58,24 @@ const Login = () => {
         <h1 className="text-3xl font-bold py-3 borber-b-2 border-neutral">
           Connexion
         </h1>
+        {error && (
+          <div className="alert alert-error">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="stroke-current shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>{error}</span>
+          </div>
+        )}
         <div className="flex flex-col p-3">
           <div className="form-control w-full">
             <label className="label">
@@ -41,7 +85,8 @@ const Login = () => {
             <input
               type="text"
               placeholder="username"
-              onChange={(e) => setUsername(e.target.value)}
+              ref={usernameRef}
+              onChange={handleChange}
               className="input input-bordered w-full"
             />
             <label className="label">
@@ -56,8 +101,9 @@ const Login = () => {
             </label>
             <input
               type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="password"
+              ref={passwordRef}
+              onChange={handleChange}
               className="input input-bordered w-full"
             />
             <label className="label">
@@ -65,7 +111,11 @@ const Login = () => {
               <span className="label-text-alt"></span>
             </label>
           </div>
-          <button type="submit" className="btn btn-active btn-primary">
+          <button
+            type="submit"
+            className="btn btn-active btn-primary mt-2"
+            disabled={validate}
+          >
             Connexion
           </button>
         </div>

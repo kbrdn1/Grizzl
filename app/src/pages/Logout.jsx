@@ -1,10 +1,8 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
-import UserContext from '../contexts/User.jsx'
+import userStore from '../stores/User'
 
 const Logout = () => {
-  const userStore = useContext(UserContext)
-
   useEffect(() => {
     userStore.logout()
   }, [])

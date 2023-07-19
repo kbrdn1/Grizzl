@@ -5,3 +5,7 @@
 .active {
   @apply text-secondary;
 }
+
+.btn {
+  @apply rounded-full;
+}

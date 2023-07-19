@@ -1,10 +1,7 @@
-import UserContext from '../contexts/User.jsx'
-import { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
+import userStore from '../stores/User.jsx'
 
 const AuthGuard = ({ children }) => {
-  const userStore = useContext(UserContext)
-
   if (!userStore.jwt) {
     return <Navigate to="/login" replace />
   }
