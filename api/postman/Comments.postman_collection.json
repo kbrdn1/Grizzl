@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "d30a1fff-0b89-4b90-9cac-63ac536fdc84",
+		"name": "Comments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22240109"
+	},
+	"item": [
+		{
+			"name": "Create Comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXIiOnsiX2lkIjoiNjRhNDI1ZmFmMGJmM2JmZWVhMzdkMWVkIiwidXNlcm5hbWUiOiJ0ZXN0In19LCJpYXQiOjE2ODk2ODQ3NTAsImV4cCI6MTY4OTc3MTE1MH0.F6-fk2FyX2Gnh7MZSP9TOYT-ehqbvIDYO_1QPTE-M9M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\": \"Commentaire 1\",\r\n    \"userId\": \"64a425faf0bf3bfeea37d1ed\",\r\n    \"postId\": \"64a57f766c128c49e16231da\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Comments by Post id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/comments/post/:postId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"comments",
+						"post",
+						":postId"
+					],
+					"variable": [
+						{
+							"key": "postId",
+							"value": "64a57f766c128c49e16231da"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\": \"Mon super commentaire\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/comments/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"comments",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "64b68ee073cc4fc4ffe7cda0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/comments/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"comments",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "64b6924335ab33458cde27af"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
