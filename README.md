@@ -91,8 +91,6 @@ and go to http://localhost:5173
 pnpm dev
 ```
 
-and go to http://localhost:3000
-
 ## Postman 🟠
 
-You can find the Postman collection in the `api/postman` folder.
+You can find the Postman collections in the `api/postman` folder.
