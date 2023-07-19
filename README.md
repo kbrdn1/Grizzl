@@ -20,7 +20,7 @@ This application is a Twitter like application. You can create an account, post 
 
 ### Backend
 
-- Node
+- Node 🟩
 - Express 🚂
 - Cors 🌐
 - Mongoose 🍃
