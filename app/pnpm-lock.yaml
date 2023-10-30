@@ -9,8 +9,8 @@ dependencies:
     specifier: ^1.4.0
     version: 1.4.0
   iconoir-react:
-    specifier: ^6.10.0
-    version: 6.10.0(react@18.2.0)
+    specifier: ^7.0.0
+    version: 7.0.0(react@18.2.0)
   mobx:
     specifier: ^6.10.0
     version: 6.10.0
@@ -1542,8 +1542,8 @@ packages:
       function-bind: 1.1.1
     dev: true
 
-  /iconoir-react@6.10.0(react@18.2.0):
-    resolution: {integrity: sha512-gau34HMBa+XwCyIK4GzIYbBCVWWadaSjBVX4CQecqwAZfSDI3FPp7AWLZ40FRGuvGmiUpWz+g0P/T/CQlzOTEw==}
+  /iconoir-react@7.0.0(react@18.2.0):
+    resolution: {integrity: sha512-qw/PfSxAOQ3YbtMPjU4jrivWXPBHrL0OIOyzIK79axLnEWUx6ck5dGSkuoyPTFVeXioR0oklLmA/swRKLH92mg==}
     peerDependencies:
       react: ^16.8.6 || ^17 || ^18
     dependencies:
